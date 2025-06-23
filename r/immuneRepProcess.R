@@ -118,7 +118,7 @@ files <-
 
 files <- gsub(paste("(",input_prefix,"|",input_suffix,"$)",sep=""),"", files)
 
-dir.create(output_dir, showWarnings = FALSE)
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 if (sample_level_run == TRUE || intracohort_run == TRUE || db_run == TRUE) {
   
@@ -1597,6 +1597,9 @@ if (cohort_level_run == TRUE) {
 # Write cohort_list.csv
 
 if (!is.null(report_dir)) {
+  if (!dir.exists(report_dir)) {
+    dir.create(report_dir, recursive = TRUE, showWarnings = FALSE)
+  }
   
   if (file.exists(paste(report_dir,"/cohort_list.csv",sep=""))) {
     cohort_list <- read.table(paste(report_dir,"/cohort_list.csv",sep=""),stringsAsFactors=FALSE, header=FALSE,sep=",")
